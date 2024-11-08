@@ -89,11 +89,14 @@ export function getQueryFn<T extends () => unknown>(fn: T) {
 export function getQueryOptions<T extends () => unknown>(
   fn: T,
   keyComplement: unknown[] = [undefined],
-  queryOptions?: QueryOptions
+  ...queryOptions: Partial<QueryOptions>[]
 ) {
+  // Merge all query options objects into a single object
+  const mergedQueryOptions = Object.assign({}, ...queryOptions);
+
   return {
     queryKey: getQueryKey(fn, keyComplement),
     queryFn: getQueryFn(fn),
-    queryOptions,
+    ...mergedQueryOptions,
   };
 }
