@@ -1,0 +1,17 @@
+{
+  "dependencies": { "@tanstack/react-query": "^5.59.20", "hono": "^4.6.9", "typescript": "^5.6.3" },
+  "devDependencies": {
+    "tsup": "^8.3.5"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "splitting": false,
+    "sourcemap": true,
+    "clean": true
+  },
+  "scripts": {
+    "build": "tsup"
+  }
+}
