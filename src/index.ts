@@ -58,6 +58,9 @@ export function getQueryFn<T extends () => unknown>(fn: T) {
   };
 }
 
+type GetQueryOptionsParams<T> = {
+  keyComplement?: string[];
+} & Omit<QueryOptions<T>, "queryKey" | "queryFn">;
 /**
  * Generate TanStack Query options from a Hono client function
  *
@@ -94,9 +97,10 @@ export function getQueryFn<T extends () => unknown>(fn: T) {
  * @param options - optionally pass an object with a queryKey complement (array) any extra queryOptions
  * @returns Object containing queryKey and queryFn and queryOptions
  */
-export function getQueryOptions<T extends () => unknown>(fn, queryOptions) {
-  // Merge all query options objects into a single object
-  const { keyComplement, ...rest } = queryOptions;
+export function getQueryOptions<T>(
+  fn: () => Promise<T>,
+  { keyComplement = [], ...rest }: GetQueryOptionsParams<T>
+) {
   return {
     queryKey: getQueryKey(fn, keyComplement),
     queryFn: getQueryFn(fn),
