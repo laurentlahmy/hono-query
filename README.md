@@ -37,8 +37,8 @@ and this will seamlessly generate the query key and function pair that you need 
 ```tsx
 {
   queryKey: [
-    "dashboard.deployments.user[\":userId\"].$get({ param: { userId } })", // this is static (variables are passed by name, like userId here)
-    "6h8s62e7uppe4ee" // this is dynamic (variables are passed by value, userId has been replaced by "6h8s62e7uppe4ee")
+    "dashboard.deployments.user[\":userId\"].$get({ param: { userId } })", // The endpoint is turned into a function name
+    "6h8s62e7uppe4ee" // The keyComplement. This is dynamic (variables are passed by value, userId has been replaced by "6h8s62e7uppe4ee")
   ],
   queryFn: async (): Promise<ResType> => {
     const res = await api.dashboard.deployments.user[':userId'].$get({ param: { userId } };
