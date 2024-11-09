@@ -47,6 +47,9 @@ and this will seamlessly generate the query key and function pair that you need 
     }
     const data = await res.json();
     return data;
-  }
+  },
+  retry: 5, // optionally pass any additional query options
+  retryDelay: 1000, // optionally pass any additional query options
+  staleTime: 5 * 1000, // optionally pass any additional query options}
 }
 ```
