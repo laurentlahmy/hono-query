@@ -103,3 +103,7 @@ export function getQueryOptions<T extends () => unknown>(fn, queryOptions) {
     ...rest,
   };
 }
+
+export const get_query_options = getQueryOptions; // if you prefer snake case
+export const get_query_fn = getQueryFn; // if you prefer snake case
+export const get_query_key = getQueryKey; // if you prefer snake case
