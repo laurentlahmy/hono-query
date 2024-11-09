@@ -27,8 +27,11 @@ const value = getQueryOptions(
   () =>
     api.users[":id"].$get({
       param: { id },
-    })
-  //   undefined
+    }),
+  {
+    keyComplement: ["aaa"],
+    retry: 5,
+  }
 );
 
 console.log("-> ", { value }, "");
