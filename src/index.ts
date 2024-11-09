@@ -99,8 +99,10 @@ type GetQueryOptionsParams<T> = {
  */
 export function getQueryOptions<T>(
   fn: () => Promise<T>,
-  { keyComplement = [], ...rest }: GetQueryOptionsParams<T>
+  options?: GetQueryOptionsParams<T>
 ) {
+  const { keyComplement = [], ...rest } = options ?? {};
+
   return {
     queryKey: getQueryKey(fn, keyComplement),
     queryFn: getQueryFn(fn),
