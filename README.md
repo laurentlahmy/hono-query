@@ -22,10 +22,12 @@ In your frontend code you can do the following:
 queryClient.fetchQuery(
   getQueryOptions(
     () => api.dashboard.deployments.user[":userId"].$get({ param: { userId } }), // the RPC endpoint you're targeting
-    [userId], // a complement you might want to add to the queryKey
-    retry: 5, // optionally pass any additional query options
-    retryDelay: 1000, // optionally pass any additional query options
-    staleTime: 5 * 1000, // optionally pass any additional query options
+    {
+      keyComplement: [userId], // a complement you might want to add to the queryKey
+      retry: 5, // optionally pass any additional query options
+      retryDelay: 1000, // optionally pass any additional query options
+      staleTime: 5 * 1000, // optionally pass any additional query options}
+    }
   )
 );
 ```

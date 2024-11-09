@@ -64,13 +64,18 @@ export function getQueryFn<T extends () => unknown>(fn: T) {
  * @example
  * getQueryOptions(
  *    () => api.dashboard.deployments.user[':userId'].$get({ param: { userId } }),
- *    [userId]
+ *    {
+ *      keyComplement: [userId],
+ *      retry: 5,
+ *      retryDelay: 1000,
+ *      staleTime: 5 * 1000
+ *    }
  * )
  * Returns:
  * {
  *   queryKey: [
  *     "dashboard.deployments.user[\":userId\"].$get({ param: { userId } })",
- *     "6h8s62e7uppe4ee"
+ *     "6h8s62e7uppe4ee" // the keyComplement
  *   ],
  *   queryFn: async (): Promise<ResType> => {
  *     const res = await api.dashboard.deployments.user[':userId'].$get({ param: { userId } };
@@ -79,24 +84,22 @@ export function getQueryFn<T extends () => unknown>(fn: T) {
  *     }
  *     const data = await res.json();
  *     return data;
- *   }
+ *   },
+ *   retry: 5 // the additional queryOptions,
+ *   retryDelay: 1000 // the additional queryOptions,
+ *   staleTime: 5 * 1000 // the additional queryOptions,
  * }
  *
  * @param fn - Hono client function
- * @param keyComplement - Additional key elements
- * @returns Object containing queryKey and queryFn
+ * @param options - optionally pass an object with a queryKey complement (array) any extra queryOptions
+ * @returns Object containing queryKey and queryFn and queryOptions
  */
-export function getQueryOptions<T extends () => unknown>(
-  fn: T,
-  keyComplement: unknown[] = [undefined],
-  ...queryOptions: Partial<QueryOptions>[]
-) {
+export function getQueryOptions<T extends () => unknown>(fn, queryOptions) {
   // Merge all query options objects into a single object
-  const mergedQueryOptions = Object.assign({}, ...queryOptions);
-
+  const { keyComplement, ...rest } = queryOptions;
   return {
     queryKey: getQueryKey(fn, keyComplement),
     queryFn: getQueryFn(fn),
-    ...mergedQueryOptions,
+    ...rest,
   };
 }
