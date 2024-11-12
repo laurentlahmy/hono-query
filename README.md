@@ -19,8 +19,10 @@ I tried to generate Tanstack [queryKey](https://tanstack.com/query/v5/docs/frame
 In your frontend code you can do the following:
 
 ```tsx
+import { q } from "hono-query";
+
 queryClient.fetchQuery(
-  getQueryOptions(
+  q(
     () => api.dashboard.deployments.user[":userId"].$get({ param: { userId } }), // the RPC endpoint you're targeting
     {
       keyComplement: [userId], // a complement you might want to add to the queryKey
@@ -37,16 +39,12 @@ and this will seamlessly generate the query key and function pair that you need 
 ```tsx
 {
   queryKey: [
-    "dashboard.deployments.user[\":userId\"].$get({ param: { userId } })", // The endpoint is turned into a function name
+    "dashboard.deployments.user[\":userId\"].$get({ param: { userId } })", // The endpoint is turned into a function name using toString(), which is sometimes replacing variables by name, sometimes by value, I'm not sure exactly why or how
     "6h8s62e7uppe4ee" // The keyComplement. This is dynamic (variables are passed by value, userId has been replaced by "6h8s62e7uppe4ee")
   ],
-  queryFn: async (): Promise<ResType> => {
-    const res = await api.dashboard.deployments.user[':userId'].$get({ param: { userId } };
-    if (!res.ok) {
-      throw new Error("server error");
-    }
-    const data = await res.json();
-    return data;
+  queryFn: async () => {
+      const res = await api.dashboard.deployments.user[":userId"].$get({ param: { userId } });
+      return (await res.json()) as InferResponseType<T>;
   },
   retry: 5, // optionally pass any additional query options
   retryDelay: 1000, // optionally pass any additional query options

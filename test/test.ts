@@ -1,7 +1,6 @@
 import { hc } from "hono/client";
-import { getQueryOptions } from "../src";
+import { q } from "../src";
 import { Hono } from "hono";
-import { L } from "vitest/dist/chunks/reporters.anwo7Y6a.js";
 
 const app = new Hono();
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -23,15 +22,20 @@ type AppType = typeof route;
 const api = hc<AppType>("http://localhost");
 
 const id = "aaa";
-const value = getQueryOptions(
+const value = q(
   () =>
     api.users[":id"].$get({
       param: { id },
     }),
   {
-    keyComplement: ["aaa"],
+    queryKeyComplement: ["aaa"],
     retry: 5,
   }
+);
+const value_2 = q(() =>
+  api.users[":id"].$get({
+    param: { id },
+  })
 );
 
 console.log("-> ", { value }, "");

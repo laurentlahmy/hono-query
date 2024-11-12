@@ -1,6 +1,6 @@
 {
   "name": "hono-query",
-  "version": "0.0.10",
+  "version": "0.0.18",
   "description": "generate query ",
   "main": "dist/index.js",
   "scripts": {
