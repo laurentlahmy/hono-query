@@ -16,7 +16,7 @@ export const MyReactComponent = () => {
       retry: 5,
       staleTime: 5 * 1000,
     })
-  ); // option object: optionally pass an array of keys to add to the key
+  ); // option object: optionally pass an array of keys to add to the key, and any queryOption
 };
 ```
 
