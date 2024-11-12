@@ -1,4 +1,4 @@
-# Automatically generate query keys and query options from your Hono RPC client endpoints.
+# generate query options from Hono RPC endpoints
 
 ```tsx
 import { q } from "hono-query";
