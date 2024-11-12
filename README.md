@@ -1,12 +1,32 @@
 # Automatically generate query keys and query options from your Hono RPC client endpoints.
 
+```tsx
+import { q } from "hono-query";
+
+export const MyReactComponent = () => {
+  const { data: user } = useQuery(q(() => api.auth.current_user.$get())); // queryOptions are generated automatically with { queryKey: "auth.current_user.$get()" and a queryFn that returns the json data from the endpoint }. Return types are inferred.
+  const { data: user } = useQuery(
+    q(() => api.auth.current_user.$get(), {
+      queryKeyComplement: ["some extra key", userId],
+    })
+  ); // option object: optionally pass an array of keys to add to the key
+  const { data: user } = useQuery(
+    q(() => api.auth.current_user.$get(), {
+      queryKeyComplement: ["some extra key", userId],
+      retry: 5,
+      staleTime: 5 * 1000,
+    })
+  ); // option object: optionally pass an array of keys to add to the key
+};
+```
+
 ### Install
 
 ```sh
 npm i hono-query
 ```
 
-### Problem:
+### Why:
 
 The "problem" now is that we need to write [queryKeys](https://tanstack.com/query/v5/docs/framework/react/guides/query-keys) and [queryFunctions](https://tanstack.com/query/v5/docs/framework/react/guides/query-functions) for all routes, as is done [here](https://github.com/betterstack-community/betternews-hono-tanstack/blob/main/frontend/src/lib/api.ts). It seems cumbersome and redundant to add React Query helper functions for all routes when they are all available on the Hono client.
 
