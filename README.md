@@ -1,4 +1,4 @@
-# generate query options from Hono RPC endpoints
+## generate query options from Hono RPC endpoints
 
 ```tsx
 import { q } from "hono-query";
