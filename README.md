@@ -15,7 +15,7 @@ export const MyReactComponent = () => {
   const { data: userData1 } = useQuery(q(() => api.auth.current_user.$get()));
   // queryOptions are generated automatically with
   // { queryKey: ["auth.current_user.$get()"], queryFn: ... }
-  // with a queryFn that returns the json data from the endpoint.
+  // where queryFn simply returns the json data from the endpoint.
   // return types are inferred.
 
   const { data: userData2 } = useQuery(
@@ -85,3 +85,10 @@ and this will seamlessly generate the query key and function pair that you need 
   staleTime: 5 * 1000, // optionally pass any additional query options}
 }
 ```
+
+### Current knowns limitations
+
+- Only works for endpoints that return json
+- Type errors with useSuspenseQuery
+
+Your contributions are welcome.
