@@ -13,8 +13,8 @@ import { q } from "hono-query";
 
 export const MyReactComponent = () => {
   // queryOptions are generated automatically with
-  // { queryKey: ["auth.current_user.$get()"]
-  // and a queryFn that returns the json data from the endpoint }.
+  // { queryKey: ["auth.current_user.$get()"], queryFn: ... }
+  // with a queryFn that returns the json data from the endpoint.
   // Return types are inferred.
   const { data: userData1 } = useQuery(q(() => api.auth.current_user.$get()));
   // you can call q with the RPC endpoint and also an option object:
