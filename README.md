@@ -52,6 +52,7 @@ queryClient.fetchQuery(
     () => api.dashboard.deployments.user[":userId"].$get({ param: { userId } }), // the RPC endpoint you're targeting
     {
       queryKeyComplement: [userId], // a complement you might want to add to the queryKey
+      // all properties other than queryKeyComplement are regular queryOptions
       retry: 5, // optionally pass any additional query options
       retryDelay: 1000, // optionally pass any additional query options
       staleTime: 5 * 1000, // optionally pass any additional query options}
