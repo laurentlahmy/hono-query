@@ -51,7 +51,7 @@ queryClient.fetchQuery(
   q(
     () => api.dashboard.deployments.user[":userId"].$get({ param: { userId } }), // the RPC endpoint you're targeting
     {
-      keyComplement: [userId], // a complement you might want to add to the queryKey
+      queryKeyComplement: [userId], // a complement you might want to add to the queryKey
       retry: 5, // optionally pass any additional query options
       retryDelay: 1000, // optionally pass any additional query options
       staleTime: 5 * 1000, // optionally pass any additional query options}
@@ -66,7 +66,7 @@ and this will seamlessly generate the query key and function pair that you need 
 {
   queryKey: [
     "dashboard.deployments.user[\":userId\"].$get({ param: { userId } })", // The endpoint is turned into a function name using toString(), which is sometimes replacing variables by name, sometimes by value, I'm not sure exactly why or how
-    "6h8s62e7uppe4ee" // The keyComplement. This is dynamic (variables are passed by value, userId has been replaced by "6h8s62e7uppe4ee")
+    "6h8s62e7uppe4ee" // The queryKeyComplement. This is dynamic (variables are passed by value, userId has been replaced by "6h8s62e7uppe4ee")
   ],
   queryFn: async () => {
       const res = await api.dashboard.deployments.user[":userId"].$get({ param: { userId } });
