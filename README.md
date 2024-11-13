@@ -4,19 +4,13 @@
 import { q } from "hono-query";
 
 export const MyReactComponent = () => {
-  const {
-    data: { user: user1 },
-  } = useQuery(q(() => api.auth.current_user.$get())); // queryOptions are generated automatically with { queryKey: ["auth.current_user.$get()"] and a queryFn that returns the json data from the endpoint }. Return types are inferred.
-  const {
-    data: { user: user2 },
-  } = useQuery(
+  const { data: userData1 } = useQuery(q(() => api.auth.current_user.$get())); // queryOptions are generated automatically with { queryKey: ["auth.current_user.$get()"] and a queryFn that returns the json data from the endpoint }. Return types are inferred.
+  const { data: userData2 } = useQuery(
     q(() => api.auth.current_user.$get(), {
       queryKeyComplement: ["some extra key", userId],
     })
   ); // option object: optionally pass an array of keys to add to the key: queryKey: ["auth.current_user.$get()", "some extra key", "someUserIdValue"]
-  const {
-    data: { user: user3 },
-  } = useQuery(
+  const { data: userData3 } = useQuery(
     q(() => api.auth.current_user.$get(), {
       queryKeyComplement: ["some extra key", userId],
       retry: 5,
