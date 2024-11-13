@@ -12,19 +12,28 @@ npm i hono-query
 import { q } from "hono-query";
 
 export const MyReactComponent = () => {
-  const { data: userData1 } = useQuery(q(() => api.auth.current_user.$get())); // queryOptions are generated automatically with { queryKey: ["auth.current_user.$get()"] and a queryFn that returns the json data from the endpoint }. Return types are inferred.
+  // queryOptions are generated automatically with
+  // { queryKey: ["auth.current_user.$get()"]
+  // and a queryFn that returns the json data from the endpoint }.
+  // Return types are inferred.
+  const { data: userData1 } = useQuery(q(() => api.auth.current_user.$get()));
+  // you can call q with the RPC endpoint and also an option object:
+  // optionally pass an array of keys to add to the key:
+  // queryKey: ["auth.current_user.$get()", "some extra key", "someUserIdValue"]
   const { data: userData2 } = useQuery(
     q(() => api.auth.current_user.$get(), {
       queryKeyComplement: ["some extra key", userId],
     })
-  ); // option object: optionally pass an array of keys to add to the key: queryKey: ["auth.current_user.$get()", "some extra key", "someUserIdValue"]
+  );
+  // you can call q with the RPC endpoint and also an option object with
+  // an optional queryKeyComplement and any regular queryOption
   const { data: userData3 } = useQuery(
     q(() => api.auth.current_user.$get(), {
       queryKeyComplement: ["some extra key", userId],
       retry: 5,
       staleTime: 5 * 1000,
     })
-  ); // option object: optionally pass an array of keys to add to the key, and any queryOption
+  );
 };
 ```
 
