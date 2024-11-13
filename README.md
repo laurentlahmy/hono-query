@@ -1,5 +1,13 @@
 ## Generate Tanstack Query queryOptions from Hono RPC endpoints
 
+### Install
+
+```sh
+npm i hono-query
+```
+
+### tl;dr
+
 ```tsx
 import { q } from "hono-query";
 
@@ -18,12 +26,6 @@ export const MyReactComponent = () => {
     })
   ); // option object: optionally pass an array of keys to add to the key, and any queryOption
 };
-```
-
-### Install
-
-```sh
-npm i hono-query
 ```
 
 ### Why:
